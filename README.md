@@ -1,4 +1,4 @@
-# Quasar App (-alquencomponents)
+# Alqen Components
 
 A Quasar Project
 
