@@ -2,11 +2,8 @@
 import 'chartjs-adapter-date-fns';
 import { ChartOptions } from 'chart.js';
 import { computed, ref } from 'vue';
-import { IAmazonHistoricalTrend, ICategory } from 'src/components/models';
+import { IAmazonHistoricalTrend } from 'src/components/models';
 import ChartComponent from 'components/ChartComponent.vue';
-
-const getPrices = ref([]);
-const getLabels = ref([]);
 
 const getChartOpts = computed<ChartOptions>(() => {
   return {
@@ -31,8 +28,8 @@ const getChartOpts = computed<ChartOptions>(() => {
     },
     scales: {
       y: {
-        min: getPrices?.value[0],
-        max: getPrices.value[getPrices.value.length - 1],
+        // min: getPrices?.value[0],
+        // max: getPrices.value[getPrices.value.length - 1],
         stacked: true,
         beginAtZero: true,
         border: {
@@ -59,51 +56,42 @@ const getChartOpts = computed<ChartOptions>(() => {
           display: false,
         },
         date: {
-          // displayFormats: {
-          //   quarter: 'MMM YY'
-          // }
+          displayFormats: {
+            quarter: 'MMM YY',
+          },
         },
       },
     },
   };
 });
 
-// Get only light colors randomly
-function getRandomColor() {
-  let letters = 'BCDEF'.split('');
-  let color = '#';
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * letters.length)];
-  }
-  return color;
-}
-
 let chartData = ref<IAmazonHistoricalTrend>();
 const getFirstChartData = computed(() => {
-  // Add price chart
-  let localData = {
-    labels: [],
-    datasets: [],
+  return {
+    lables: [15, 10, 15],
+    datasets: [
+      {
+        type: 'line',
+        label: 'item 1',
+        stepped: true,
+        fill: false,
+        borderColor: "'#6B6BF7'",
+        backgroundColor: '#6B6BF7',
+        data: [10, 20, 30],
+        tension: 0.4,
+      },
+      {
+        type: 'line',
+        label: 'item 2',
+        stepped: true,
+        fill: false,
+        borderColor: "'#FFD231'",
+        backgroundColor: '#FFD231',
+        data: [4, 8, 12],
+        tension: 0.4,
+      },
+    ],
   };
-  // In Amazon marketplace
-
-  localData.labels = getLabels.value;
-  chartData?.value?.categories?.forEach((item: ICategory) => {
-    let randomColor = getRandomColor();
-    let categoryDataset = {
-      type: 'line',
-      label: `BSR (${item.name} )`,
-      stepped: true,
-      fill: false,
-      borderColor: randomColor,
-      backgroundColor: randomColor,
-      data: [{ x: 12, y: 43 }],
-      tension: 0.4,
-    };
-    localData?.datasets.push(categoryDataset);
-  });
-
-  return localData;
 });
 </script>
 
