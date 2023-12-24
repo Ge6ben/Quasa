@@ -4,6 +4,14 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/table-component.vue') },
+    ],
+  },
+  ,
+  {
+    path: '/chart',
+    component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
   },
 
